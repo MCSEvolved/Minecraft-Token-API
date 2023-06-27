@@ -2,7 +2,7 @@
 This server handles all token generation for the minecraft server with the firebase admin sdk.
 
 ## Generate a token
-To generate a token for the minecraft server, you need to send a GET request to the server. The server is available at http://localhost:9007/minecraft-token
+To generate a token for the minecraft server, you need to send a GET request to the server. The server is available at `http://localhost:9007/minecraft-token`
 
 The request should be send to the endpoint `/generate`
 
