@@ -6,6 +6,17 @@ const router = express.Router();
 const UID  = 'official-mcs-minecraft-server'
 
 router.get('/', async (req, res) => {
+    // Check if the password is provided in the Authorization header
+    const password = req.get('Authorization') 
+    if (!password) {
+        return res.status(401).send('No password provided in Authorization header');
+    }
+
+    // Check if the password is correct
+    if (password !== process.env.PASSWORD) {
+        return res.status(401).send('Invalid password');
+    }
+
     // Generate a custom token
     console.log('Generating custom token')
     let customToken;
