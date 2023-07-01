@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
     let customToken;
     try {
         customToken = await getAuth().createCustomToken(UID);
+        console.log(customToken)
     }
     catch (error) {
         console.log(error)
@@ -45,20 +46,31 @@ router.get('/', async (req, res) => {
         console.log('Received Statuscode: ' + response.status)
         console.log('Received StatusText: ' + response.statusText)
 
-        res.status(500).send('Error exchanging custom token');
-        return;
+        return res.status(500).send('Error exchanging custom token');
     }
 
-    const data = await response.json();
+    if (!response.body) {
+        console.log('Error exchanging custom token, did not receive body', response)
+        return res.status(500).send('Error exchanging custom token');
+    }
+
+    let data;
+    try {
+        data = await response.json();
+    }
+    catch (error) {
+        console.log('Error exchanging custom token, could not parse body', error)
+        return res.status(500).send('Error exchanging custom token');
+    }
+
     if (!data.idToken) {
-        console.log('Error exchanging custom token, did not receive idtoken', data)
-        res.status(500).send('Error exchanging custom token');
-        return;
+        console.log('Error exchanging custom token, did not receive idtoken')
+        return res.status(500).send('Error exchanging custom token');
     }
     console.log('Exchanged custom token for idtoken')
 
     // Send the idtoken to the client
-    res.status(200).send(data.idToken);
+    res.status(200).send({"idToken": data.idToken});
 });
 
 export default router;

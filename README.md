@@ -7,3 +7,11 @@ To generate a token for the minecraft server, you need to send a GET request to 
 The request should be send to the endpoint `/generate`
 
 It should return a statusCode 200 with the idtoken in the body. It's also possible for it to return a statusCode 500 if something went wrong (likely an auth-server error). In that case, take a look at the logs in the admin panel.
+
+response body looks like:
+
+```json
+{
+    "idToken":"token-here"
+}
+```
