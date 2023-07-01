@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
     // Fetch auth server to exchange custom token for access token
     console.log('Exchanging custom token for idtoken at auth server')
     const response = await fetch('https://api.mcsynergy.nl/auth/exchange-custom-token', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'custom-token': customToken
         }
